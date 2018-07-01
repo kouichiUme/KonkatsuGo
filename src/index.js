@@ -26,7 +26,13 @@ if (navigator.geolocation) {
 			document.getElementById('result').innerHTML = '<dl><dt>緯度</dt><dd>' + lat + '</dd><dt>経度</dt><dd>' + lng + '</dd><dt>高度</dt><dd>' + alt + '</dd><dt>緯度、経度の精度</dt><dd>' + accLatlng + '</dd><dt>高度の精度</dt><dd>' + accAlt + '</dd><dt>方角</dt><dd>' + heading + '</dd><dt>速度</dt><dd>' + speed + '</dd></dl>';
 
 
-			setInterval(function () {
+			setInterval(function () {	
+				var locateData = position.coords;
+
+				// データの整理
+				var lat = locateData.latitude;
+				var lng = locateData.longitude;
+				var alt = locateData.altitude;
 				var data = {"lat":lat,"lng":lng,"alt":alt};
 				var gpsdata = JSON.stringify(data);
 
