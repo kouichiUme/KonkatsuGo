@@ -12,12 +12,12 @@ var credentials = { key: privateKey, cert: certificate, passphrase: "konkatsu" }
 
 var app = express();
 
-app.use(express.static(path.join(__dirname + '/../public')));
+app.use(express.static(path.join(__dirname + '/../../build')));
 app.get("/index.html", function (req, res) {
-    res.sendFile(path.join(__dirname + '/../index.html'));
+    res.sendFile(path.join(__dirname + '/../../build/index.html'));
 });
 app.get("/index.js", function (req, res) {
-    res.sendFile(path.join(__dirname + '/../index.js'));
+    res.sendFile(path.join(__dirname + '/../../build/index.js'));
 });
 app.post("/gps/data", bodyParser.json(), function (req, res) {
     var umezawalocate = req.body;

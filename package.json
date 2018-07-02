@@ -1,28 +1,22 @@
 {
     "scripts": {
         "start:dev": "webpack-dev-server --hot --host 0.0.0.0 --https ; nodemon ./src/main.js",
-        "start": "babel-node src/server/app.js"
+        "start": "babel-node src/server/app.js",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
     },
-    "build": "babel server --out-dir build --presets=es2015 && webpack",
     "devDependencies": {
+        "babel-preset-react": "^6.24.1",
         "couchdb-client": "^1.0.14",
+        "express": "^4.16.3",
+        "fetch-jsonp": "^1.1.3",
         "fs": "0.0.1-security",
+        "history": "^4.7.2",
         "json-loader": "^0.5.7",
         "net": "^1.0.2",
         "node-couchdb": "^1.3.0",
         "nodemon": "^1.17.5",
-        "webpack": "^4.12.0",
-        "webpack-cli": "^3.0.8",
-        "webpack-dev-middleware": "^3.1.3",
-        "webpack-dev-server": "^3.1.4",
-        "webpack-hot-middleware": "^2.22.2",
-        "webpack-node-externals": "^1.7.2"
-    },
-    "dependencies": {
-        "babel-preset-react": "^6.24.1",
-        "express": "^4.16.3",
-        "fetch-jsonp": "^1.1.3",
-        "history": "^4.7.2",
         "qs": "^6.5.2",
         "react": "^16.4.1",
         "react-dom": "^16.4.1",
@@ -32,6 +26,12 @@
         "react-scripts": "^1.1.4",
         "redux": "^4.0.0",
         "redux-logger": "^3.0.6",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "webpack": "^3.11.0",
+        "webpack-cli": "^3.0.8",
+        "webpack-dev-middleware": "^3.1.3",
+        "webpack-dev-server": "^3.1.4",
+        "webpack-hot-middleware": "^2.22.2",
+        "webpack-node-externals": "^1.7.2"
     }
 }

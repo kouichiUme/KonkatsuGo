@@ -1,12 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 // ユーザーの端末がGeoLocation APIに対応しているかの判定
-
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
 
 // 対応している場合
 if (navigator.geolocation) {
@@ -24,43 +16,42 @@ if (navigator.geolocation) {
 			var alt = data.altitude;
 			var accLatlng = data.accuracy;
 			var accAlt = data.altitudeAccuracy;
-			var heading = data.heading;			//0=北,90=東,180=南,270=西
+			var heading = data.heading;
 			var speed = data.speed;
-
-			// アラート表示
-			//			alert( "あなたの現在位置は、\n[" + lat + "," + lng + "]\nです。" ) ;
 
 			// HTMLへの書き出し
 			document.getElementById('result').innerHTML = '<dl><dt>緯度</dt><dd>' + lat + '</dd><dt>経度</dt><dd>' + lng + '</dd><dt>高度</dt><dd>' + alt + '</dd><dt>緯度、経度の精度</dt><dd>' + accLatlng + '</dd><dt>高度の精度</dt><dd>' + accAlt + '</dd><dt>方角</dt><dd>' + heading + '</dd><dt>速度</dt><dd>' + speed + '</dd></dl>';
 
-
-			setInterval(function () {	
-				var locateData = position.coords;
-
-				// データの整理
-				var lat = locateData.latitude;
-				var lng = locateData.longitude;
-				var alt = locateData.altitude;
+			// ローカルサーバへの書き出し
+			setInterval(function () {
 				var data = {"lat":lat,"lng":lng,"alt":alt};
 				var gpsdata = JSON.stringify(data);
 
-				// $.ajax({
-				// 	type : 'post',
-				// 	url : "https://192.168.11.9:8443/gps/data",
-				// 	data : gpsdata,
-				// 	contentType: 'application/JSON',
-				// 	dataType : 'JSON',
-				// 	scriptCharset: 'utf-8',
-				// 	success : function(data) {
-				// 	}
-				// });
+				$.ajax({
+					type : 'post',
+					url : "https://192.168.11.9:8080/gps/data",
+					data : gpsdata,
+					contentType: 'application/JSON',
+					dataType : 'JSON',
+					scriptCharset: 'utf-8',
+					success : function(data) {
+					}
+				});
 			}, 60000);
 			// 位置情報
-			
+			var latlng = new google.maps.LatLng(lat, lng);
+
 			// Google Mapsに書き出し
-			
+			var map = new google.maps.Map(document.getElementById('map-canvas'), {
+				zoom: 15,				// ズーム値
+				center: latlng,		// 中心座標 [latlng]
+			});
+
 			// マーカーの新規出力
-		
+			new google.maps.Marker({
+				map: map,
+				position: latlng,
+			});
 		},
 
 		// [第2引数] 取得に失敗した場合の関数
