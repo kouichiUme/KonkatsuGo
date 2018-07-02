@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux'; // 追加
+import createBrowserHistory from 'history/createBrowserHistory'; // 追加
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 // ユーザーの端末がGeoLocation APIに対応しているかの判定
+import createStore from './createStore'; // 追加
+import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// historyのインスタンスを生成
+const history = createBrowserHistory();
+
+const store = createStore(history);
+ReactDOM.render(
+	<Provider store={store} >
+		<ConnectedRouter history={history}>
+			<App />
+		</ConnectedRouter>
+	</Provider>, document.getElementById('root'));
 registerServiceWorker();
 
 // 対応している場合
@@ -34,14 +47,14 @@ if (navigator.geolocation) {
 			document.getElementById('result').innerHTML = '<dl><dt>緯度</dt><dd>' + lat + '</dd><dt>経度</dt><dd>' + lng + '</dd><dt>高度</dt><dd>' + alt + '</dd><dt>緯度、経度の精度</dt><dd>' + accLatlng + '</dd><dt>高度の精度</dt><dd>' + accAlt + '</dd><dt>方角</dt><dd>' + heading + '</dd><dt>速度</dt><dd>' + speed + '</dd></dl>';
 
 
-			setInterval(function () {	
+			setInterval(function () {
 				var locateData = position.coords;
 
 				// データの整理
 				var lat = locateData.latitude;
 				var lng = locateData.longitude;
 				var alt = locateData.altitude;
-				var data = {"lat":lat,"lng":lng,"alt":alt};
+				var data = { "lat": lat, "lng": lng, "alt": alt };
 				var gpsdata = JSON.stringify(data);
 
 				// $.ajax({
@@ -56,11 +69,11 @@ if (navigator.geolocation) {
 				// });
 			}, 60000);
 			// 位置情報
-			
+
 			// Google Mapsに書き出し
-			
+
 			// マーカーの新規出力
-		
+
 		},
 
 		// [第2引数] 取得に失敗した場合の関数

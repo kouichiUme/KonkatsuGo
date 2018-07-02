@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import { React, Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import GpsData from './containers/GpsData'
 
 class App extends Component {
   render() {
@@ -13,6 +15,8 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <GpsData />
+
       </div>
     );
   }
